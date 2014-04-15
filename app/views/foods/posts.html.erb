@@ -1,10 +1,16 @@
-<%= flash[:alert] %>
+<div class= "container">
 
-<div>
-  <h2> Codelion의 맛집 평가 사이트에 오신 여러분ㅇ들을 환영합니다. </h2>
-  <p> 여러분들만 알고 있는 최고의 맛집을 아렬주세요!</p>
+<% if !flash[:alert].nil? %>
+
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
   </div>
-
-  <hr>
+  <% end %>
+ 
+  <div class="well text-center">
+    <h3> Welcome to my own YELP website. </h3>
+     <p> Tell me your favorite restaurants to bite!</p>
+   </div>
 
 <%= render :partial => "foods/posts" %>
+</div> 

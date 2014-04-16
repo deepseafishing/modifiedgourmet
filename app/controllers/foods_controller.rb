@@ -8,13 +8,13 @@ class FoodsController < ApplicationController
   def posts_category
     case params[:category]
     when "korean"
-       @category = "한식"
+       @category = "Korean Foods"
     when "japanese"
-       @category = "일식"
+       @category = "Japanese Foods"
     when "chinese"
-        @category = "중식"
+        @category = "Chinese Foods"
     else
-        @category = "양식"
+        @category = "Western Foods"
     end
          @posts = Post.where(category: @category)
   end
@@ -36,7 +36,7 @@ class FoodsController < ApplicationController
     post.content = params[:post_content]
     post.image = params[:image]
     if post.save
-      flash[:alert] = "저장되었습니다."
+      flash[:alert] = "Post Saved."
       redirect_to "/foods/show/#{post.id}"
     else
       flash[:alert] = post.errors.values.flatten.join(' ')
@@ -47,7 +47,7 @@ class FoodsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     if @post.user_id != session[:user_id] 
-      flash[:alert] = "수정 권한이 없습니다."
+      flash[:alert] = "Not authorized."
       redirect_to :back
     end
   end
@@ -58,7 +58,7 @@ class FoodsController < ApplicationController
     post.title = params[:post_title]
     post.content = params[:post_content]
     if post.save
-       flash[:alert] = "수정되었습니다."
+       flash[:alert] = "Post Edited."
        redirect_to "/foods/show/#{post.id}"
     else
        flash[:alert] = post.errors.values.flatten.join(' ')
@@ -70,10 +70,10 @@ class FoodsController < ApplicationController
     post = Post.find(params[:id])
     if post.user_id == session[:user_id]
      post.destroy
-     flash[:alert] = "삭제되었습니다."
+     flash[:alert] = "Post deleted."
      redirect_to "/"
     else
-      flash[:alert] = "삭제 권한이 없습니다."
+      flash[:alert] = "Not authorized."
       redirect_to :back
     end
   end
@@ -85,7 +85,7 @@ class FoodsController < ApplicationController
     comment.content = params[:comment_content]
     comment.save
 
-    flash[:alert] = "새 댓글을 달았습니다."
+    flash[:alert] = "Comment Added"
     redirect_to "/foods/show/#{comment.post_id}"
   end
 
@@ -93,10 +93,10 @@ class FoodsController < ApplicationController
     comment = Comment.find(params[:id])
     if comment.user_id == session[:user_id]
      comment.destroy
-     flash[:alert] = "댓글이 삭제되었습니다."
+     flash[:alert] = "Comment Deleted"
      redirect_to "/foods/show/#{comment.post_id}"
     else
-      flash[:alert] = "해당 댓글의 삭제 권한이 없습니다."
+      flash[:alert] = "Unauthorized"
       redirect_to :back
     end
  end

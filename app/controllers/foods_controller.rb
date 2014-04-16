@@ -21,7 +21,7 @@ class FoodsController < ApplicationController
 
   def show
   @post = Post.find(params[:id])
-  @comment_write = User.where(id: session[:user_id])[0]
+  @comment_writer = User.where(id: session[:user_id])[0]
   end
 
   def write

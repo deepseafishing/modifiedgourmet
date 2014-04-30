@@ -5,17 +5,18 @@ class UsersController < ApplicationController
   def signup_complete
     user = User.new
     user.username = params[:username]
+    user.email = params[:email]
     if params[:password] == params[:retype_password]
       user.password = params[:password]
       if user.save
-         flash[:alert] = "성공적으로 가입되었습니다."
+         flash[:alert] = "Registered!"
          redirect_to "/"
        else
          flash[:alert] = user.errors.values.flatten.join(' ')
          redirect_to :back
        end
      else
-       flash[:alert] = "비밀번호가 맞지 않습니다."
+       flash[:alert] = "Wrong password. Has to be more than 5 letters."
        redirect_to :back
      end
   end
@@ -26,21 +27,21 @@ class UsersController < ApplicationController
   def login_complete
      user = User.where(username: params[:username])[0]
      if user.nil?
-       flash[:alert] = "아이디 또는 비밀번호를 잘못 입력하셨습니다."
+       flash[:alert] = "Incorrect ID or Password. Please try again."
        redirect_to :back
       elsif user.password != params[:password]
-        flash[:alert] = "아이디 똔느 비밀번호를 잘못 입력하셨습니다."
+        flash[:alert] = "Please check your password!"
         redirect_to :back
       else
         session[:user_id] = user.id
-        flash[:alert] = "성공적으로 로그인하여씃ㅂ니다."
+        flash[:alert] = "Welcome to my site, " + params[:username]
         redirect_to "/"
         end
   end
 
   def logout_complete
      reset_session
-     flash[:alert] = "성공적으로 로그아웃했습니다."
+     flash[:alert] = "Logged out successfully!"
      redirect_to "/"
   end
 end

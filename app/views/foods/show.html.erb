@@ -1,36 +1,140 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+/*  function rgba(red, green, blue, alpha){
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
+    this.alpha = alpha;
+    this.getCSS = function(){
+      return "rgba("+this.red+","+this.green+","+this.blue+","+this.alpha+")";
+      }
+  }
+  */
+  $(document).ready(function(){
+        $('.glyphicon-chevron-up').on("click",function(){
+          var number;
+          number = parseInt($(this).parent().siblings(".voteNum").html());
+          number += 1;
+          $(this).parent().siblings(".voteNum").text(number);          
+          var currentColor = $(this).parents(".commentBody").css("background-color");
+          var lastParan = currentColor.lastIndexOf(')');
+          var lastComma = currentColor.lastIndexOf(',');
+          var o = parseFloat(currentColor.slice(lastComma + 1, lastParan));
+          console.log(o);
+          if(number >= 0){
+            $(this).parents(".entryVote").siblings(".commentBox").css("font-weight", "normal");
+          $(this).parents(".entryVote").siblings(".commentBox").css("opacity", 1);
+            if(o < 0.9){
+          o += 0.1;}
+          var to = $(this).parents(".entryVote").siblings(".commentBox").css("opacity");
+          to += 0.1; 
+          }
+          if(number > 3){
+            $(this).parents(".entryVote").siblings(".commentBox").css("font-weight", "bold");
+          }
+          var newColor = currentColor.slice(0, lastComma + 1) + o  +")";
+          console.log(newColor);
+         
+          $(this).parents(".commentBody").css("background-color", newColor);
+
+       });
+
+     $('.glyphicon-chevron-down').on("click",function(){
+          var number;
+          number = parseInt($(this).parent().siblings(".voteNum").html());
+          number -= 1;
+          $(this).parent().siblings(".voteNum").text(number);
+          var currentColor = $(this).parents(".commentBody").css("background-color");
+          var lastParan = currentColor.lastIndexOf(')');
+          var lastComma = currentColor.lastIndexOf(',');
+          var o = parseFloat(currentColor.slice(lastComma + 1, lastParan));
+          console.log(o);
+          o -= 0.1;
+         if(number <4){
+            $(this).parents(".entryVote").siblings(".commentBox").css("font-weight", "normal");
+         }
+         if(number < 0 && o < 0.2){
+          var to = $(this).parents(".entryVote").siblings(".commentBox").css("opacity");
+          to -= 0.1; 
+          $(this).parents(".entryVote").siblings(".commentBox").css("opacity", to);
+         ;}
+          var newColor = currentColor.slice(0, lastComma + 1) + o  +")";
+          console.log(newColor);
+         
+          $(this).parents(".commentBody").css("background-color", newColor);
+       });
+    });
+
+ /*   function upVote(up){
+       var number = parseInt(up.parentNode.nextSibling.nextSibling.innerHTML);
+       number += 1;
+       up.parentNode.nextSibling.nextSibling.innerHTML = number;
+       var jobject;
+       console.log(up.parentNode.parentNode.parentNode.style.backgroundColor);
+    };
+      
+    function downVote(down){
+       var number = parseInt(down.parentNode.previousSibling.previousSibling.innerHTML);
+       number -= 1;
+       down.parentNode.previousSibling.previousSibling.innerHTML = number;
+       };
+
+   */    
+</script>
 <div class="container">
   <% if !flash[:alert].nil? %>
-  <div class="alert alert-danger">
-   <%= flash[:alert] %>
-   </div>
+    <div class="alert alert-danger">
+       <%= flash[:alert] %>
+    </div>
    <% end %>
 
-   <h2 class="text-center"> Restaurants Brief </h2>
-   <div class="row">
-      <div class="col-md-1">
-      </div>
-      <div class="col-md-5 text-right">
-      <img class="img-rounded" src="<%= @post.image_url(:medium) %>">
-      </div>
-      <div class="col-md-5">
-        <h3>+ <%= @post.title %></h3>
-        <p><span class="label label-warning"><%= @post.category %></span></p>
-        <p><%= @post.content %></p>
-        <p><a href="/foods/edit/<%= @post.id %>">Edit</a> | <a href="/foods/delte_complete/<%= @post.id %>">Delete</a> || <a href="/"> See all posts</a></p>
-        <hr/>
-        <% @post.comments.each do |comment| %>
-         <p><strong><%= comment.user.username %></strong><%= comment.content %> | <a href="/foods/delete_comment_complete/<%= comment.id %>"> Delete </a></p>
-        <% end %>
-    <form class="text-left" action="/foods/write_comment_complete" method="post">
-    <input type="hidden" name="post_id" value="<%= @post.id %>"> 
-    <% if !@comment_writer.nil? %>
-    <p><strong> <%= @comment_writer.username %></strong> <input type="text" name="comment_content" placeholder="Please fill out your comment"> <input type="submit" value="add"></p>
-    <% end %>
-    </form>
+  <h2 class="text-center"> Restaurants Brief </h2>
+     <div class="row">
+        <div class="col-md-1">
+        </div>
+       <div class="col-md-5 text-right">
+       <img class="img-rounded" src="<%= @post.image_url(:medium) %>">
+       </div>
+       <div class="col-md-5">
+       <h3>+ <%= @post.title %></h3>
+      <p><span class="label label-warning"><%= @post.category %></span></p>
+       <p><%= @post.content %></p>
+         <p><a href="/foods/edit/<%= @post.id %>">Edit</a> | <a href="/foods/delete_complete/<%= @post.id %>">Delete</a> || <a href="/"> See all posts</a></p>
     </div>
     <div class="col-md-1">
     </div>
-    </div>
-    </div>
-
-
+   </div> 
+   <div class="row">
+           <div class="col-md-2">   
+           </div>
+           <div class="col-md-10">   
+        <% @post.comments.each do |comment| %>
+            <div class="commentBody">
+                   <div class="entryVote">
+                          <div class="upVote"><span class="glyphicon glyphicon-chevron-up" style="font-size:26px;" ></span></div>
+                          <div class="voteNum">0</div>
+                          <div class="downVote"><span class="glyphicon glyphicon-chevron-down" style="font-size:26px;"></span></div>
+                   </div>
+                   <div class="commentBox">
+                 <strong><%= comment.user.username%></strong>
+                <%= comment.content %> | <a href="/foods/delete_comment_complete/<%= comment.id %>"> Delete </a>
+               </div>
+               <div style="clear:both;"></div>
+           </div>
+        <% end %>
+        </div>
+  </div>
+  <br>
+            <div class="row">
+              <div class="col-md-2">
+              </div>
+              <div class="col-md-10">
+                <form class="text-left" action="/foods/write_comment_complete" method="post">
+                <input type="hidden" name="post_id" value="<%= @post.id %>"> 
+                 <% if !@comment_writer.nil? %>
+                <p><strong> <%= @comment_writer.username %></strong> <input type="text" name="comment_content" placeholder="Please fill out your comment"> <input type="submit" value="add"></p>
+               <% end %>
+                </form>
+              </div>
+            </div>
+        </div>

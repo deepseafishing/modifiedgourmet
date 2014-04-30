@@ -1,3 +1,48 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript"> 
+   $(document).ready(function(){
+
+    $('#inputemail').blur(function (){
+         var add=this.value;
+         var correctemail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+         if(correctemail.test(add)){
+         $('#valid').show();    
+         $('#invalid').hide();
+         $('#can').addClass("has-success");
+         $('#can').removeClass("has-error");
+        }else{
+         $('#invalid').show();
+         $('#valid').hide();    
+         $('#can').addClass("has-error");
+         $('#can').removeClass("has-success");
+         }
+    });
+
+    $('#repass').blur(function(){
+        var password = document.getElementById('pass').value; 
+        var repassword = this.value;
+        if(password != repassword){
+         $('#notsame').show();
+         $('#same').hide();    
+         $('#firstpass').addClass("has-error");
+         $('#firstpass').removeClass("has-success");
+         $('#secondpass').addClass("has-error");
+         $('#secondpass').removeClass("has-success");
+         }else{
+         $('#same').show();    
+         $('#notsame').hide();
+         $('#firstpass').addClass("has-success");
+         $('#firstpass').removeClass("has-error");   
+         $('#secondpass').addClass("has-success");
+         $('#secondpass').removeClass("has-error");   
+         }
+      
+      });
+
+
+          }); 
+</script>
+
 <div class="container">
   <% if !flash[:alert].nil? %>
   <div class="alert alert-danger">
@@ -13,8 +58,11 @@
 
         <form action= "/users/signup_complete" method="post">
           <p><input class="form-input" type="text" name="username" placeholder="ID"></p>
-          <p><input class="form-input" type="password" name="password" placeholder="Password"></p>
-          <p><input class="form-input" type="password" name="retype_password" placeholder="Confirm Password"></p>
+          <p><div id="can" class="form-group"><input class="form-input form-control" type="text" id="inputemail" name="email" placeholder="E-mail"></div></p>
+          <span id="valid" style="color:green; display:none;">Valid Email</span><span id="invalid" style="color:red; display:none;">Please put valid email address.</span>
+          <p><div id="firstpass" class="form-group"><input class="form-input form-control" type="password" id="pass" name="password" placeholder="Password"></div></p>
+          <p><div id="secondpass" class="form-group"><input class="form-input form-control" type="password" id="repass" name="retype_password" placeholder="Confirm Password"></div></p>
+          <span id="same" style="color:green; display:none;">password matched</span><span id="notsame" style="color:red; display:none;">Password not matched. Please reenter your password.</span>
           <input class="btn btn-lg btn-block" type="submit" value="Register">
         </form>
     </div>

@@ -1,3 +1,51 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+
+
+ */
+
+
+.gourmet-title{
+  height: 120px;
+  padding: 50px 0px 0px 0px;
+  text-align: center;
+}
+a.gourmet-title-link{
+  color: #a3293d;
+  }
+a.gourmet-title-link:hover{
+  color: #ee3b53;
+  text-decoration: none;
+} 
+.form-heading{
+  margin: 35px 0px 20px 0px;
+}
+
+.form-input{
+  width: 100%;
+  height: 40px;
+  border: 1.5px solid #cccccc;
+  border-radius: 6px;
+  padding: 0px 0px 0px 10px;
+}
+
+.form-textarea{
+  width: 100%;
+  height: 100px;
+  border: 1.5px solid #cccccc;
+  border-radius: 6px;
+  padding: 10px 0px 0px 10px;
+}
+
 /*!
  * Bootstrap v3.1.1 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
@@ -5,6 +53,7 @@
  */
 
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -2376,8 +2425,8 @@ input[type="button"].btn-block {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('/assets/glyphicons-halflings-regular.eot');
-  src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('assets/glyphicons-halflings-regular.eot');
+  src: url('assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('assets/glyphicons-halflings-regular.woff') format('woff'), url('assets/glyphicons-halflings-regular.ttf') format('truetype'), url('assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;

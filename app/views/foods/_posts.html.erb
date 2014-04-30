@@ -1,3 +1,32 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('.favor').on("click", function(){
+       var titles = $(this).siblings('h4').children('.title').html();
+       var favorites = '';
+       var number = localStorage.length;
+       var name = '';
+       localStorage.setItem(name+number, titles);
+       for(var i=0; i<number+1; i++){
+         favorites +=  localStorage.getItem(name+i);
+
+         
+              };
+
+         $('.favorList').html(favorites); 
+         $('.alert-success').show();
+         $('.remove').show();
+      });
+      
+      $('.remove').on("click", function(){
+          localStorage.clear();
+         $('.favorList').html(''); 
+        });
+
+});
+
+</script>
 <% @posts.reverse.each do |post| %>
   <div class="panel">
     <div class="row panel-body">
@@ -7,10 +36,11 @@
           <img class="img-rounded" src="<%= post.image_url(:thumb) %>">
           </div>
           <div class="col-md-6">
-            <h4><a href="/foods/show/<%= post.id %>"><%= post.title %></a>[Comments: <%= post.comments.count %>]</h4>
+            <h4><a class="title" href="/foods/show/<%= post.id %>"><%= post.title %></a>[Comments: <%= post.comments.count %>]</h4>
             <p><span class="label label-warning"><%= post.category %> </span></p>
-            <p><strong><%= post.user.username %></strong></p>
+            <p><strong><%= post.user.username %></strong></p><span class="favor"><span class="label label-success">Add to your Favorites! </span></span>
           </div>
         </div>
       </div>
     <% end %> 
+   <div class="alert alert-success" style="display:none;">Your chosen favorites!</div><span class="remove" style="display:none;">Remove</span><div class="favorList"></div>
